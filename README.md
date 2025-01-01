@@ -1,168 +1,212 @@
-# SRT Translator Pro v2
+# SRT Translator Pro v3
 
 ## Project Overview
 
-SRT Translator Pro is an enhanced web application that enables batch translation of SRT subtitle files with support for multiple target languages and custom dictionary integration. The application features a professional UI and leverages AI-powered translation for accurate results.
+SRT Translator Pro v3 is a professional-grade web application for batch translation of SRT subtitle files. This latest version introduces advanced features including folder/zip upload support, enhanced progress tracking, and improved translation reliability. The application maintains its core strengths of multi-language support and custom dictionary integration while adding sophisticated batch processing capabilities.
 
-## 🌟 Key Features
+## 🌟 New Features in v3
 
-- Professional UI with Material Design
-- Multi-language simultaneous translation
-- Chunked translation for large files
-- Custom dictionary with multi-language support
-- Real-time progress tracking per language
-- Automatic file downloads
-- Error recovery and retry mechanism
-- Responsive design for all devices
+- **Advanced File Upload Options**
+  - Single SRT file upload
+  - Folder upload with multiple SRT files
+  - Zip file upload containing multiple SRT files
+  - Maintains folder structure in outputs
+
+- **Enhanced Progress Tracking**
+  - Real-time progress monitoring per file and language
+  - Overall progress calculation based on selected languages
+  - Detailed status updates with completion percentages
+  - Visual progress indicators with status chips
+
+- **Improved Translation Engine**
+  - Robust retry mechanism with exponential backoff
+  - Concurrent batch processing
+  - Smart chunking system
+  - Translation caching for improved performance
+
+- **Advanced Status Monitoring**
+  - Detailed metrics and statistics
+  - Translation logs and error tracking
+  - File-specific progress tracking
+  - Language-specific status updates
 
 ## 🛠 Technology Stack
 
-- Frontend: React with TypeScript
+- Frontend: React 18 with TypeScript
 - UI Framework: Material-UI (MUI) v5
-- Icons: Material Icons
-- Translation API: Anthropic Claude
 - State Management: React Hooks
-- File Parsing: PapaParse
+- Translation API: Anthropic Claude
+- File Processing: JSZip for zip handling
+- CSV Parsing: PapaParse
 - Styling: Emotion (CSS-in-JS)
 
 ## 📂 Project Structure
 
 ```
-srt-translator/
-│
-├── public/
-│   └── index.html
+srt-translator-v3/
 │
 ├── src/
 │   ├── components/
-│   │   ├── DataDictionaryUploader.tsx
-│   │   ├── DataDictionaryTable.tsx
-│   │   ├── FileUploader.tsx
-│   │   ├── LanguageSelector.tsx
-│   │   └── TranslationProgress.tsx
-│
+│   │   ├── FileUploader/
+│   │   │   ├── SingleFileUpload.tsx
+│   │   │   ├── FolderUpload.tsx
+│   │   │   └── ZipUpload.tsx
+│   │   ├── Progress/
+│   │   │   ├── TranslationProgress.tsx
+│   │   │   ├── DetailedProgress.tsx
+│   │   │   └── TranslationMetrics.tsx
+│   │   ├── Dictionary/
+│   │   │   ├── DictionaryUploader.tsx
+│   │   │   └── DictionaryTable.tsx
+│   │   └── Common/
+│   │       ├── LanguageSelector.tsx
+│   │       └── StatusChip.tsx
+│   │
 │   ├── utils/
-│   │   ├── csvParser.ts
-│   │   ├── fileHelpers.ts
+│   │   ├── translationManager.ts
+│   │   ├── fileHandlers.ts
 │   │   ├── srtParser.ts
-│   │   └── translator.ts
-│
+│   │   └── progressCalculator.ts
+│   │
 │   ├── types/
 │   │   └── index.ts
-│
+│   │
 │   └── App.tsx
-│
-├── package.json
-└── README.md
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Node.js (v14+)
+- Node.js (v16+)
 - npm or Yarn
 
 ### Installation
 
-1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/srt-translator.git
-cd srt-translator
-```
+# Clone the repository
+git clone https://github.com/yourusername/srt-translator-v3.git
+cd srt-translator-v3
 
-2. Install dependencies
-```bash
-npm install @mui/material @mui/icons-material @emotion/react @emotion/styled
+# Install dependencies
 npm install
-```
 
-3. Start the development server
-```bash
+# Start the development server
 npm start
 ```
 
-## 📝 Custom Dictionary CSV Format
+## 📝 Features Deep Dive
 
-The custom dictionary now supports multiple target languages. Format:
+### 1. Advanced File Upload System
+- **Single File Mode**: Traditional single SRT file upload
+- **Folder Mode**: Upload entire folders containing multiple SRT files
+- **Zip Mode**: Upload zip archives containing SRT files
+- Maintains original folder structure in translations
+- Automatic file type validation
+- Progress tracking for each upload type
 
-```csv
-term,es,fr,de,it
-hello,hola,bonjour,hallo,ciao
-goodbye,adiós,au revoir,auf wiedersehen,arrivederci
-```
-
-- `term`: Original term to replace
-- `es`: Spanish translation
-- `fr`: French translation
-- `de`: German translation
-- `it`: Italian translation
-
-## 🔍 How It Works
-
-1. Upload an SRT file
-2. Select multiple target languages
-3. (Optional) Upload a multi-language custom dictionary CSV
-4. Click "Start Translation"
-5. Monitor progress for each language
-6. Automatic download of translated files
-
-## ⚡ Technical Features
-
-- Chunked Translation
-  - Breaks large files into manageable chunks
-  - Configurable chunk size (default: 10 entries)
-  - Progress tracking per chunk
+### 2. Enhanced Translation Engine
+- **Smart Chunking**
+  - Optimized chunk size for better performance
+  - Concurrent batch processing
   - Automatic retry mechanism
+  - Translation caching
 
-- Error Handling
-  - Retry mechanism with exponential backoff
-  - Detailed error reporting per language
-  - Graceful failure recovery
-  - User-friendly error messages
+- **Error Handling**
+  - Exponential backoff retry strategy
+  - Detailed error logging
+  - Per-file and per-language error tracking
+  - Automatic recovery mechanisms
 
-- Performance
-  - Optimized for large files
-  - Efficient memory usage
-  - Parallel language processing
-  - Progress caching
+### 3. Progress Tracking System
+- **Granular Progress Monitoring**
+  - File-level progress tracking
+  - Language-specific progress
+  - Overall translation progress
+  - Estimated completion time
 
-## 🎯 Use Cases
+- **Visual Feedback**
+  - Progress bars with status indicators
+  - Status chips for each stage
+  - Error indicators with detailed messages
+  - Success notifications
 
-- Professional subtitle translation
-- Batch processing of multiple languages
-- Custom terminology management
-- Corporate content localization
-- Media production workflows
+### 4. Download Management
+- **Format-Specific Downloads**
+  - Single file downloads
+  - Folder structure preservation
+  - Zip file creation for batch downloads
+  - Automatic file naming conventions
+
+## 🔍 Use Cases
+
+- **Media Production Companies**
+  - Batch process multiple subtitle files
+  - Maintain folder organization
+  - Track progress across multiple projects
+
+- **Localization Teams**
+  - Process multiple languages simultaneously
+  - Custom dictionary implementation
+  - Quality control through progress monitoring
+
+- **Content Creators**
+  - Simple single file translations
+  - Multiple language support
+  - Easy progress tracking
 
 ## 🔒 Security & Performance
 
-- Chunked processing for large files
-- Secure API communication
-- Rate limiting and retry mechanisms
+- Secure file handling
+- Client-side processing where possible
+- Efficient memory management
+- Rate limiting protection
 - Progress persistence
-- Error recovery
-- Memory optimization
+- Error recovery systems
 
-## 🔄 Version History
+## 📈 Version History
+
+### v3.0.0 (Current)
+- Added folder and zip file upload support
+- Enhanced progress tracking system
+- Implemented concurrent batch processing
+- Added translation metrics and logging
+- Improved error handling and recovery
+- Enhanced user interface and feedback
 
 ### v2.0.0
-- Added multi-language support
-- Implemented chunked translation
-- Enhanced UI with Material Design
-- Added progress tracking per language
-- Improved error handling
-- Added retry mechanism
-- Enhanced custom dictionary support
+- Multi-language support
+- Basic chunked translation
+- Material Design UI
+- Progress tracking
+- Custom dictionary support
 
 ### v1.0.0
 - Initial release with basic translation features
 
-## 📋 Future Enhancements
+## 🔄 Future Roadmap
 
-- Additional language support
-- Custom chunk size configuration
-- Translation memory
-- Batch file processing
-- Advanced dictionary management
 - Cloud storage integration
+- Advanced translation memory system
+- API rate limiting configuration
+- Custom chunk size settings
+- Batch operation controls (pause/resume/cancel)
+- Advanced dictionary management
+- Translation quality metrics
+- Custom language model selection
+
+## 📋 Support
+
+For support, please visit our [documentation](https://docs.srttranslator.com) or contact [Prashant Kumar](https://prashantkumar60099.netlify.app/).
+
+## 🤝 Contributing
+
+We welcome contributions! [Connect with us](https://prashantkumar60099.netlify.app/) for details.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+*Note: This is a professional translation tool designed for high-volume subtitle translation needs. For optimal performance, please follow the recommended usage guidelines in our documentation.*
